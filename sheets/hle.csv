@@ -1,0 +1,72 @@
+name,addr,area,status,notes
+OSCreateThread,0x801671E8,threads,implemented,"Runs original to fill OSThread, then registers with host scheduler"
+OSResumeThread,0x80167670,threads,implemented,Host scheduler; first resume spawns a host thread at context.srr0
+OSSuspendThread,0x801678F8,threads,implemented,Host scheduler
+OSSleepThread,0x80167A68,threads,implemented,Blocks the host thread on the guest queue address
+OSWakeupThread,0x80167B54,threads,implemented,Readies all threads waiting on the queue; preempts if higher priority
+OSYieldThread,0x801671AC,threads,implemented,Host scheduler
+__OSReschedule,0x8016717C,threads,implemented,Preemption check
+OSExitThread,0x801673D0,threads,implemented,"Marks thread dead, wakes joiners, parks host thread"
+OSCancelThread,0x801674B4,threads,implemented,Host scheduler
+SelectThread,0x80166F54,threads,implemented,Should be unreachable; logged
+OSLoadContext,0x80163A30,threads,implemented,Should be unreachable (rfi context switch); logged
+OSSetAlarm,0x80162BD8,alarms,implemented,Host timer; handler delivered like an interrupt
+OSCancelAlarm,0x80162C40,alarms,implemented,Host timer
+DVDInit,0x80151290,dvd,implemented,Only __DVDFSInit (FST pointers); no drive reset
+DVDReadAbsAsyncPrio,0x80152FE0,dvd,implemented,"Synchronous copy from disc image, then callback; covers DVDReadAsyncPrio/DVDReadPrio"
+DVDReadDiskID,0x8015318C,dvd,implemented,Copies disc header
+DVDInquiryAsync,0x801536DC,dvd,implemented,Zeroed drive info
+DVDCancelAsync,0x80153948,dvd,implemented,Immediate
+DVDCancel,0x80153BB8,dvd,implemented,Immediate
+DVDGetDriveStatus,0x8015383C,dvd,implemented,Always idle
+DVDReset,0x801537AC,dvd,implemented,No-op
+DVDResume,0x801538F8,dvd,implemented,No-op
+DVDCheckDisk,0x80153C90,dvd,implemented,Always present
+DVDGetCommandBlockStatus,0x801537F0,dvd,implemented,Reads block->state
+PADInit,0x80168880,pad,implemented,Always succeeds
+PADReset,0x8016867C,pad,implemented,Always succeeds
+PADRecalibrate,0x8016877C,pad,implemented,Always succeeds
+PADControlMotor,0x80168E64,pad,implemented,No rumble
+PADSetSamplingCallback,0x801698B0,pad,implemented,Not called back
+PADRead,0x80168A98,pad,implemented,Port state from Bevy keyboard/gamepad input
+SIGetType,0x8016AD70,pad,implemented,Same as SIProbe
+__GXFifoLink,0x80155DE8,gx,implemented,Tracks CPU-FIFO/GPU link so display-list recording is not drawn
+__AI_SRC_INIT,0x801465C8,audio,implemented,Skips audio sample-rate calibration busy loop
+OSReport,0x80163F64,debug,implemented,Printed to log / bmx_trace.log
+OSPanic,0x80163FE4,debug,implemented,Logged; thread parked
+OSResetSystem,0x8016593C,system,implemented,Ignored (logged)
+__OSDoHotReset,0x801658F4,system,implemented,Ignored (logged)
+PPCHalt,0x80148730,system,implemented,Logged; thread parked
+__OSInitAudioSystem,0x80162FFC,audio,implemented,Skips the init-ucode handshake; dsp.rs starts in the ROM state that follows it (0x8071FEED pending)
+__OSStopAudioSystem,0x801631B8,audio,implemented,No-op (the DSP emulation has nothing to stop)
+CARDInit,0x80149620,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDProbeEx,0x8014C560,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDMountAsync,0x8014CC24,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDUnmount,0x8014CE60,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDCheckExAsync,0x8014BEDC,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDFormat,0x8014D6A8,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDFreeBlocks,0x80149858,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDOpen,0x8014D970,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDClose,0x8014DAE8,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDCreateAsync,0x8014DC74,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDReadAsync,0x8014E17C,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDWriteAsync,0x8014E4E4,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDDeleteAsync,0x8014E69C,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDGetStatus,0x8014E9A4,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+CARDSetStatusAsync,0x8014EAD0,memcard,implemented,"Slot A emulated in memcard.rs, saved to memcard/slotA.bin"
+PPCMfhid2,0x8014878C,cpu,implemented,HID2 is CPU-global: synced from/to a shared copy (per-thread register files otherwise lose LCEnable/PSE)
+PPCMthid2,0x80148794,cpu,implemented,HID2 global sync
+LCDisable,0x801633E0,cpu,implemented,HID2 global sync
+__OSLoadFPUContext,0x801636F4,cpu,implemented,HID2 global sync
+__OSSaveFPUContext,0x80163818,cpu,implemented,HID2 global sync
+OSDisableInterrupts,0x80164668,cpu,implemented,"Clears MSR.EE, returns previous EE. The SLEIGH mtmsr semantics preserve the old EE bit, so the recompiled body never disabled interrupts"
+OSEnableInterrupts,0x8016467C,cpu,implemented,"Sets MSR.EE, returns previous EE (see OSDisableInterrupts)"
+OSRestoreInterrupts,0x80164690,cpu,implemented,"MSR.EE = (r3 != 0), returns previous EE (see OSDisableInterrupts)"
+PPCMtmsr,0x801486F8,cpu,implemented,MSR = r3 including EE (see OSDisableInterrupts)
+PSMTXCopy,0x80161894,math,implemented,Native MTX library (psmtx.rs): single-precision fused steps in the SDK's accumulation order
+PSMTXConcat,0x801618C8,math,implemented,Native MTX library (psmtx.rs): single-precision fused steps in the SDK's accumulation order
+PSVECCrossProduct,0x80161F78,math,implemented,Native MTX library (psmtx.rs): single-precision fused steps in the SDK's accumulation order
+PSMTXInverse,0x801619E4,math,implemented,Native MTX library (psmtx.rs): single-precision fused steps in the SDK's accumulation order
+CARDGetResultCode,0x80149828,memcard,implemented,Last result of the emulated CARD call on that channel (memcard.rs)
+bmxSaveSerialize,0x80129F84,cheat,implemented,"Session-only Unlock all (cheats.rs): the player's own values of the unlocked bytes are swapped in for the copy into the card buffer"
+bmxSaveDeserialize,0x8012A270,cheat,implemented,"Session-only Unlock all (cheats.rs): loaded values become the player's own, then the unlocks are re-applied"

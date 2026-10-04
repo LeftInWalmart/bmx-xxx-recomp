@@ -1,0 +1,9 @@
+key,value
+game_id,GB3E51
+title,BMX XXX (USA)
+engine,"Z-Axis (zobj/zgui/zfile ...), Dolphin SDK, Metrowerks runtime"
+entry_point,0x800051CC
+bss,0x8019D960+0x87528
+dol_sha1,4cb93ddcd3c2953edb085b92646b72d6f9ac0c94
+dol_size,1690816
+toolchain,Ghidra 12.1.4 + GameCubeLoader via ghidra-cli 0.2.2

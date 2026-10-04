@@ -1,0 +1,29 @@
+# Public repository: only the tools, the hand-written runtime and hand-curated metadata.
+# Everything generated from the game's executable (it contains the game's code) stays local
+# and is regenerated from your own disc image (see README).
+
+# Sheets generated from main.dol (instructions, memory image, strings, decompiled metadata)
+/sheets/*
+!/sheets/hle.csv
+!/sheets/manual_names.csv
+!/sheets/meta.csv
+
+# Ghidra C projection
+/src/
+
+# Generated Rust: the 24 recompiled crates, the memory image and the dispatch table,
+# plus the generated workspace / bmx-recomp manifests (written by tools/gen_rust.py)
+/rust/crates/recomp/
+/rust/crates/bmx-recomp/mem/
+/rust/crates/bmx-recomp/src/table.rs
+/rust/crates/bmx-recomp/Cargo.toml
+/rust/Cargo.toml
+
+# Build output and runtime files
+/rust/target/
+memcard/
+*.log
+*.txt
+!/rust/crates/**/*.txt
+*.png
+__pycache__/

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://recomp.fyi/schema/v1.json",
+  "game": "BMX XXX",
+  "wikidata": "Q2714180",
+  "system": "GameCube",
+  "type": "recomp",
+  "original": { "region": "USA", "serial": "GB3E51" },
+  "project": "bmx-xxx-recomp",
+  "status": "released",
+  "targets": ["Windows"],
+  "toolchain": ["Ghidra", "Bevy"],
+  "approach": "Static recompilation of main.dol from Ghidra p-code into Rust (Spreadsheet Method), with an HLE console runtime, AX DSP emulation and a Bevy host",
+  "maintainers": [{ "name": "LeftInWalmart", "link": "https://github.com/LeftInWalmart" }]
+}
